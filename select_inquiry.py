@@ -8,7 +8,8 @@ def show_me(database):
     collection_name_2018_2020 = f'названия сборников, вышедших в период с 2018 по 2020 год включительно - {connection.execute(f"select album_name, album_year from albums a where album_year between 2018 and 2020;").fetchall()}'
     my_track = 'название треков, которые содержат слово "мой"/"my"' + str(connection.execute(f"select track_name from tracks where track_name like '%%My%%';").fetchall())
     one_word_artist = f'исполнители, чье имя состоит из 1 слова - {artist_search(connection.execute(f"SELECT * FROM artists").fetchall())}'
-    return albums_2018, name_and_max_timing_track, name_and_timing_track, collection_name_2018_2020, my_track, one_word_artist
+    one_word_artist_var2= connection.execute(f"select artist_name from artists where artist_name not like '%% %%';").fetchall()
+    return albums_2018, name_and_max_timing_track, name_and_timing_track, collection_name_2018_2020, my_track, one_word_artist, one_word_artist_var2
 
 def artist_search(artists):
     artists_list = []
@@ -17,7 +18,6 @@ def artist_search(artists):
             artists_list.append(name[1])
 
     return artists_list
-
 
 
 
